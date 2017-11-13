@@ -39,7 +39,7 @@ var paintSeats = function(array) {
 } 
 
 function chooseZone() {
-    var choice = prompt('En que zona prefieres reservar \n 1. Primera clase \n 2. Economica \n \n');
+    var choice = prompt('En que zona prefieres reservar \n 1. Primera clase \n 2. Economica \n \n Por favor ingrese un numero');
     if (choice == 1) {
         checkFirstClassZone();
     } 
