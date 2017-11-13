@@ -1,8 +1,8 @@
 window.onload = function () {
     var button = document.getElementById("button");
     button.addEventListener('click', chooseZone);
-    /*var seat = document.getElementsByClassName('seats');
-    var containerTickets = document.getElementById('tickets');*/
+    var button = document.getElementById("button");
+    button.addEventListener('keypress', reset);
 }
 var airlineSeats = [
     false,
@@ -22,13 +22,13 @@ var busySeats = 0;
 var paintSeats = function(array) {
     var containerSeats = document.getElementById('seats');
 
-    for(i = 0; i< array.length; i++) {
+    for(a = 0; a< array.length; a++) {
         var seat = document.createElement('div');
         seat.className = 'seats';
         
         /* Del primer elelemento al cuarto, en nuestro arreglo va a ser primera clase, que seria del
         indice 0 al 3. */
-        if(i < 4) {
+        if(a < 4) {
             seat.style.background = '#B4FCE4';
         }
         else {
@@ -54,17 +54,17 @@ function chooseZone() {
 function checkFirstClassZone() {
     var zone = 'Primera Clase';
     /* Recorre del elemento 0 al elemento 3 y verifica cuales estan disponibles */
-    for(a = 0; a < 4; a++) {
-        if(airlineSeats[a] == false) {
-            airlineSeats[a] = true;
-            reserveSeat(a);
-            paintTicket(a);
+    for(i = 0; i < 4; i++) {
+        if(airlineSeats[i] === false) {
+            airlineSeats[i] = true;
+            reserveSeat(i);
+            paintTicket(i, zone);
             busySeats++;
             /* Al reservar un asiento no nesecitamos seguir recorriendo, por eso 
             paramos el for con break */
             break;
         }
-        else if(a === 3 && airlineSeats[a] === true) {
+        else if(i == 3 && airlineSeats[i] === true) {
             reasignEconomicZone(zone);
 
         }
@@ -74,17 +74,17 @@ function checkFirstClassZone() {
 function checkEconomicZone() {
     var zone = 'Economica';
     /* Recorre del elemento 4 al elemento 9 y verifica cuales estan disponibles */
-    for (b = 4; b < 10; b++) {
-        if(airlineSeats[b] == false) {
-            airlineSeats[b] = true;
-            reserveSeat(b);
-            paintTicket(b);
+    for (i = 4; i < 10; i++) {
+        if(airlineSeats[i] === false) {
+            airlineSeats[i] = true;
+            reserveSeat(i);
+            paintTicket(i, zone);
             busySeats++;
             /* Al reservar un asiento no nesecitamos seguir recorriendo, por eso 
             paramos el for con break */
             break;
         }
-        else if(b === 9 && airlineSeats[b] === true);{
+        else if(i === 9 && airlineSeats[i] === true) { 
             reasignFirstClassZone(zone);
         }
     }
@@ -94,7 +94,6 @@ function reserveSeat(indexToPaint) {
     var seat = document.getElementsByClassName('seats');
     seat[indexToPaint].style.background = '#E99231';
 }
-
 
 function reasignEconomicZone(zone) {
     if (busySeats == 10) {
@@ -130,22 +129,22 @@ function reasignFirstClassZone(zone) {
             nextFlight();
         }
     }
-}
+} 
 
-function paintTicket() {
+function paintTicket(i, zone) {
     var containerTickets = document.getElementById('tickets');
     var ticket =document.createElement('div');
-    ticket.className = 'seats';
+    ticket.className = 'tickets';
     var title = document.createElement('p');
     var reservedSeating = document.createElement('p');
     var zoneClass = document.createElement('p');
-    title.textContent = 'PASE DE ABORDAR';
-    reservedSeating.textContent = 'N° de asientos: ' + (index + 1);
+    title.textContent = 'PASE ABORDAR';
+    reservedSeating.textContent = 'N° de asientos: ' + (i + 1);
     zoneClass.textContent = zone;
     ticket.appendChild(title);
     ticket.appendChild(reservedSeating);
     ticket.appendChild(zoneClass);
-    containerTickets.appendChild(tickets);
+    containerTickets.appendChild(ticket);
 }
 
 function nextFlight() {
@@ -155,6 +154,11 @@ function nextFlight() {
 function noSeats() {
     alert('Lo sentimos :( \n Ya no quedan asientos disponibles en este avion.')
 }
-
+function reset() {
+    title.textContent = '';
+    reservedSeating.textContent = '';
+    zoneClass.textContent = '';
+}
 paintSeats(airlineSeats);
+
 
